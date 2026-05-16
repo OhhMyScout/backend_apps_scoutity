@@ -1,0 +1,10 @@
+# Mengabaikan virtual environment
+venv/
+.venv/
+
+# Mengabaikan cache python
+**/__pycache__/
+*.pyc
+
+# Mengabaikan file environment variable (data sensitif)
+.env
