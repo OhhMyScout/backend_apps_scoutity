@@ -1,0 +1,598 @@
+2026-05-18 08:38:28 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 08:38:28 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 08:38:28 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 08:38:31 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 08:38:31 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 08:59:26 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 08:59:26 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 08:59:26 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 08:59:29 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 08:59:29 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:01:58 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:02:00 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:02:00 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:02:01 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:02:01] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:03:27 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:03:27] "[33mPOST /api/logout HTTP/1.1[0m" 404 -
+2026-05-18 09:07:09 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\main.py', reloading
+2026-05-18 09:07:09 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:07:13 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:07:13 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:07:20 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 09:07:20 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 09:07:20 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:07:24 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:07:24 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:07:31 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:07:32 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:07:33 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:07:33 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:07:33] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:08:13 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWIwZTFiNjgtYWQ5MS00OGQ3LThiYWQtNTE3MDZhYTZjYzc5IiwiZW1haWwiOiJteXNlbnMuaWRAZ21haWwuY29tIiwiZXhwIjoxNzc5NjM5NzI2fQ.030tveTqBC09Wifhh5JdBkKLF0cDwKMT82Njxwc_N8k "HTTP/2 200 OK"
+2026-05-18 09:08:14 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 404 Not Found"
+2026-05-18 09:08:14 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:08:14] "[35m[1mPOST /api/logout HTTP/1.1[0m" 500 -
+2026-05-18 09:11:05 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\logout\\logout.py', reloading
+2026-05-18 09:11:06 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:11:10 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:11:10 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:12:05 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\logout\\logout.py', reloading
+2026-05-18 09:12:05 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:12:09 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:12:09 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:12:29 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 09:12:29 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 09:12:29 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:12:33 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:12:33 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:12:55 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:12:57 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:12:57 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:12:57 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:12:57] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:13:19 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWIwZTFiNjgtYWQ5MS00OGQ3LThiYWQtNTE3MDZhYTZjYzc5IiwiZW1haWwiOiJteXNlbnMuaWRAZ21haWwuY29tIiwiZXhwIjoxNzc5NjM5NzI2fQ.030tveTqBC09Wifhh5JdBkKLF0cDwKMT82Njxwc_N8k "HTTP/2 200 OK"
+2026-05-18 09:13:19 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 404 Not Found"
+2026-05-18 09:13:20 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.10 "HTTP/2 200 OK"
+2026-05-18 09:13:20 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:13:20] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 09:15:38 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:15:39 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:15:39 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:15:39 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:15:39] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:17:07 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\login\\login.py', reloading
+2026-05-18 09:17:08 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:17:12 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:17:12 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:20:42 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:20:44 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:20:44 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:20:44 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 401 Unauthorized"
+2026-05-18 09:20:44 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:20:44] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:23:54 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\login\\login.py', reloading
+2026-05-18 09:23:55 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:23:59 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:23:59 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:24:16 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\register\\register.py', reloading
+2026-05-18 09:24:17 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:24:20 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:24:20 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:24:32 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 09:24:32 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 09:24:32 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:24:35 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:24:35 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:25:05 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:25:06 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:25:06 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:25:07 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 401 Unauthorized"
+2026-05-18 09:25:07 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:25:07] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:27:52 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\logout\\logout.py', reloading
+2026-05-18 09:27:52 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:27:56 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:27:56 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:28:05 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.101.100:5000
+2026-05-18 09:28:05 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 09:28:05 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:28:09 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:28:09 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:28:26 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:28:27 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:28:27 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:28:28 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 401 Unauthorized"
+2026-05-18 09:28:28 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:28:28] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:30:12 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 09:30:13 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:30:14 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 09:30:14 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 09:30:14 - INFO - [LOGIN] - 192.168.101.98 - - [18/May/2026 09:30:14] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:52:52 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.10.3:5000
+2026-05-18 09:52:52 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 09:52:52 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 09:52:57 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 09:52:57 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 09:55:40 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-05-18 09:55:41 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:55:41 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-05-18 09:55:41 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 09:55:41 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 09:55:41] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:55:49 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMWIyODEwNTQtYmZhOC00YzU1LThlNjYtNDM0ZjQyYTU1ZWRhIiwiZW1haWwiOiJmYWhyaXByYXRhbWExNDIwNUBnbWFpbC5jb20iLCJleHAiOjE3Nzk2NDUwOTV9.fwhS99P94ZL5lSNmCh5_Am0xgdd18fXeSpMP9RQgjbQ "HTTP/2 200 OK"
+2026-05-18 09:55:49 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 09:55:49 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-05-18 09:55:49 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 09:55:49] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 09:57:33 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-05-18 09:57:33 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:57:33 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-05-18 09:57:34 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 09:57:34 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 09:57:34] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 09:58:54 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-05-18 09:58:55 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-05-18 09:58:55 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-05-18 09:58:55 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 09:58:55 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 09:58:55] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 10:04:15 - INFO - [LOGIN] - Mencoba login untuk email: 
+2026-05-18 10:04:17 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq. "HTTP/2 200 OK"
+2026-05-18 10:04:17 - WARNING - [LOGIN] - Gagal login: Email '' tidak terdaftar
+2026-05-18 10:04:17 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 10:04:17] "[33mPOST /api/login HTTP/1.1[0m" 404 -
+2026-05-18 10:07:10 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-05-18 10:07:12 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-05-18 10:07:12 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-05-18 10:07:12 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 10:07:12 - INFO - [LOGIN] - 172.20.10.2 - - [18/May/2026 10:07:12] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 15:45:35 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.56.136:5000
+2026-05-18 15:45:35 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 15:45:35 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 15:45:37 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 15:45:37 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 15:52:42 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-18 15:52:42 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-18 15:52:46 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-18 15:52:46 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-18 15:52:47 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-05-18 15:52:47 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-05-18 15:52:48 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-05-18 15:52:48 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 15:52:48 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-05-18 15:52:48 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 15:52:48] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-05-18 15:53:17 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-05-18 15:53:17 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 15:53:17 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-05-18 15:53:17 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 15:53:17 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 15:53:17 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-05-18 15:53:17 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 15:53:17] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-05-18 15:56:42 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\login\\login.py', reloading
+2026-05-18 15:56:42 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 15:56:45 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 15:56:45 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 15:58:44 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\login\\login.py', reloading
+2026-05-18 15:58:45 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 15:58:47 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 15:58:47 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 16:01:42 - INFO - [LOGIN] -  * Detected change in 'C:\\Users\\OhhMyPahrii\\Documents\\Kuliah\\Capstone\\backend_apps_scoutity\\app\\module\\logout\\logout.py', reloading
+2026-05-18 16:01:42 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 16:01:48 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.56.136:5000
+2026-05-18 16:01:48 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-18 16:01:48 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-18 16:01:50 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-18 16:01:50 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-18 16:01:56 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-18 16:01:57 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:01:57 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-05-18 16:01:57 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.12 "HTTP/2 200 OK"
+2026-05-18 16:01:57 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:01:57 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:01:57] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 16:02:10 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3Nzk2OTk3MTd9.gK77T8EKzQSkET-v6Wc4F2BKNkmFUeuPzaAuYWHdlZ4 "HTTP/2 200 OK"
+2026-05-18 16:02:10 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:02:10 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.12 "HTTP/2 200 OK"
+2026-05-18 16:02:10 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:02:10] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 16:02:25 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-18 16:02:25 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:02:26 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-05-18 16:02:26 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.12 "HTTP/2 200 OK"
+2026-05-18 16:02:26 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:02:26 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:02:26] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 16:02:57 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3Nzk2OTk3NDZ9.-NMXc5VHB9HHHt2c7sTEhGVmZzhel6xdnDu3u7qqISw "HTTP/2 200 OK"
+2026-05-18 16:02:57 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:02:57 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.12 "HTTP/2 200 OK"
+2026-05-18 16:02:57 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:02:57] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 16:03:58 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-18 16:03:58 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-18 16:04:02 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-18 16:04:02 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-18 16:04:03 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-05-18 16:04:03 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-05-18 16:04:03 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-05-18 16:04:03 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:04:03 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-05-18 16:04:03 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:04:03] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-05-18 16:04:23 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-05-18 16:04:23 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:04:23 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-05-18 16:04:23 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:04:24 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:04:24 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-05-18 16:04:24 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:04:24] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-05-18 16:04:58 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-18 16:04:58 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:04:58 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-05-18 16:04:58 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.13 "HTTP/2 200 OK"
+2026-05-18 16:04:58 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:04:58 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:04:58] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 16:05:27 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3Nzk2OTk4OTh9.1_BP9uYGn_MaOGWD6ka3u9kuJ9YyLqkSBMfqRd-7uoY "HTTP/2 200 OK"
+2026-05-18 16:05:27 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:05:28 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.13 "HTTP/2 200 OK"
+2026-05-18 16:05:28 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:05:28] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 16:06:02 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 16:06:02 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:06:02 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 16:06:02 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.10 "HTTP/2 200 OK"
+2026-05-18 16:06:02 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:06:02 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:06:02] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 16:07:15 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJteXNlbnMuaWRAZ21haWwuY29tIiwiZXhwIjoxNzc5Njk5OTYyfQ.pJUhk63nJHkLXD_IbBPdlvqnue8JMlj3dcd0nAvD8t4 "HTTP/2 200 OK"
+2026-05-18 16:07:15 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:07:15 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.10 "HTTP/2 200 OK"
+2026-05-18 16:07:15 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:07:15] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 16:08:34 - INFO - [LOGIN] - Mencoba login untuk email: mysens.id@gmail.com
+2026-05-18 16:08:35 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.mysens.id%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:08:35 - INFO - [LOGIN] - Login BERHASIL untuk email: mysens.id@gmail.com
+2026-05-18 16:08:35 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.10 "HTTP/2 200 OK"
+2026-05-18 16:08:35 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:08:35 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:08:35] "POST /api/login HTTP/1.1" 200 -
+2026-05-18 16:09:00 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJteXNlbnMuaWRAZ21haWwuY29tIiwiZXhwIjoxNzc5NzAwMTE1fQ.f68fnCNSf9ljon1lNrRjgGvGOiTsiCPf79bZH0Lugeo "HTTP/2 200 OK"
+2026-05-18 16:09:01 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:09:01 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.10 "HTTP/2 200 OK"
+2026-05-18 16:09:01 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:09:01] "POST /api/logout HTTP/1.1" 200 -
+2026-05-18 16:32:35 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-18 16:32:35 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-18 16:32:38 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-18 16:32:39 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-18 16:32:42 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-05-18 16:32:42 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-05-18 16:32:43 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-05-18 16:32:44 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:32:44 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-05-18 16:32:44 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:32:44] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-05-18 16:33:03 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-05-18 16:33:03 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:33:03 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-05-18 16:33:04 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:33:04 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-18 16:33:04 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-05-18 16:33:04 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:33:04] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-05-18 16:33:39 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-18 16:33:40 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-18 16:33:40 - WARNING - [LOGIN] - Gagal login: Email 'ff729340@gmail.com' tidak terdaftar
+2026-05-18 16:33:40 - INFO - [LOGIN] - 192.168.56.141 - - [18/May/2026 16:33:40] "[33mPOST /api/login HTTP/1.1[0m" 404 -
+2026-05-31 18:36:14 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.186.216.109:5000
+2026-05-31 18:36:14 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-31 18:36:14 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-31 18:36:17 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-31 18:36:17 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-31 18:37:11 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.186.216.109:5000
+2026-05-31 18:37:11 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-05-31 18:37:11 - INFO - [LOGIN] -  * Restarting with stat
+2026-05-31 18:37:15 - WARNING - [LOGIN] -  * Debugger is active!
+2026-05-31 18:37:15 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-05-31 18:41:09 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-31 18:41:09 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-31 18:41:14 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-31 18:41:15 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-31 18:41:16 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 422 Unprocessable Entity"
+2026-05-31 18:41:16 - ERROR - [LOGIN] - Error pada proses registrasi email 'ff729340@gmail.com': User already registered
+Traceback (most recent call last):
+  File "C:\Users\OhhMyPahrii\Documents\Kuliah\Capstone\backend_apps_scoutity\venv\Lib\site-packages\supabase_auth\_sync\gotrue_base_api.py", line 73, in _request
+    response.raise_for_status()
+  File "C:\Users\OhhMyPahrii\Documents\Kuliah\Capstone\backend_apps_scoutity\venv\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '422 Unprocessable Entity' for url 'https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\OhhMyPahrii\Documents\Kuliah\Capstone\backend_apps_scoutity\app\module\register\register.py", line 84, in register_user
+    auth_response = supabase.auth.sign_up({
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\OhhMyPahrii\Documents\Kuliah\Capstone\backend_apps_scoutity\venv\Lib\site-packages\supabase_auth\_sync\gotrue_client.py", line 247, in sign_up
+    response = self._request(
+               ^^^^^^^^^^^^^^
+  File "C:\Users\OhhMyPahrii\Documents\Kuliah\Capstone\backend_apps_scoutity\venv\Lib\site-packages\supabase_auth\_sync\gotrue_base_api.py", line 76, in _request
+    raise handle_exception(e)  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+supabase_auth.errors.AuthApiError: User already registered
+2026-05-31 18:41:16 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:41:16] "[31m[1mPOST /api/register HTTP/1.1[0m" 400 -
+2026-05-31 18:41:47 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-31 18:41:47 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-31 18:41:52 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-31 18:41:53 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-31 18:41:53 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-05-31 18:41:53 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-05-31 18:41:55 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-05-31 18:41:55 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-31 18:41:55 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-05-31 18:41:55 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:41:55] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-05-31 18:42:37 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-31 18:42:37 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-31 18:42:38 - WARNING - [LOGIN] - Gagal login: Akun 'ff729340@gmail.com' belum diverifikasi OTP.
+2026-05-31 18:42:38 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:42:38] "[31m[1mPOST /api/login HTTP/1.1[0m" 403 -
+2026-05-31 18:43:32 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-31 18:43:33 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-31 18:43:34 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-05-31 18:43:34 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.15 "HTTP/2 200 OK"
+2026-05-31 18:43:34 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-31 18:43:34 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:43:34] "POST /api/login HTTP/1.1" 200 -
+2026-05-31 18:44:52 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-05-31 18:44:53 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-31 18:44:53 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-05-31 18:44:54 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.15 "HTTP/2 200 OK"
+2026-05-31 18:44:54 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-31 18:44:54 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:44:54] "POST /api/login HTTP/1.1" 200 -
+2026-05-31 18:45:51 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-05-31 18:45:51 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-05-31 18:45:56 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-05-31 18:45:57 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-05-31 18:45:57 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-05-31 18:45:57 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-05-31 18:45:59 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-05-31 18:45:59 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-31 18:45:59 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-05-31 18:45:59 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:45:59] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-05-31 18:46:16 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-05-31 18:46:16 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-31 18:46:16 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-05-31 18:46:17 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-05-31 18:46:17 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-05-31 18:46:17 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-05-31 18:46:17 - INFO - [LOGIN] - 10.186.216.42 - - [31/May/2026 18:46:17] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 14:46:26 - INFO - [LOGIN] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.137.97.153:5000
+2026-06-01 14:46:26 - INFO - [LOGIN] - [33mPress CTRL+C to quit[0m
+2026-06-01 14:46:26 - INFO - [LOGIN] -  * Restarting with stat
+2026-06-01 14:46:30 - WARNING - [LOGIN] -  * Debugger is active!
+2026-06-01 14:46:30 - INFO - [LOGIN] -  * Debugger PIN: 580-432-972
+2026-06-01 14:49:15 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 14:49:15 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 14:49:19 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 14:49:19 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 14:49:20 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 14:49:20 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 14:49:22 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 14:49:22 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:49:22 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 14:49:22 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:49:22] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 14:49:43 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 14:49:43 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:49:43 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 14:49:43 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:49:43 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:49:43 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 14:49:43 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:49:43] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 14:50:16 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 14:50:18 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:50:18 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 14:50:18 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.17 "HTTP/2 200 OK"
+2026-06-01 14:50:18 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:50:18 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:50:18] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 14:50:38 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-06-01 14:50:38 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:50:39 - WARNING - [LOGIN] - Gagal login: Password salah untuk email 'fahripratama14205@gmail.com'
+2026-06-01 14:50:39 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:50:39] "[31m[1mPOST /api/login HTTP/1.1[0m" 401 -
+2026-06-01 14:50:47 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-06-01 14:50:48 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:50:48 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-06-01 14:50:48 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-06-01 14:50:48 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:50:48 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:50:48] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 14:58:45 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 14:58:45 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 14:58:49 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 14:58:50 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 14:58:50 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 14:58:50 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 14:58:52 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 14:58:52 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:58:52 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 14:58:52 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:58:52] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 14:59:22 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 14:59:22 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:59:22 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 14:59:23 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 14:59:23 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 14:59:23 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 14:59:23 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 14:59:23] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 15:20:01 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 15:20:01 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 15:20:04 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 15:20:05 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 15:20:05 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 15:20:05 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 15:20:07 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 15:20:07 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:20:07 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 15:20:07 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:20:07] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 15:20:24 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 15:20:25 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:20:25 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 15:20:25 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:20:25 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:20:25 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 15:20:25 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:20:25] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 15:30:16 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 15:30:16 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 15:30:19 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 15:30:20 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 15:30:21 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 15:30:21 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 15:30:22 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 15:30:22 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:30:22 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 15:30:22 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:30:22] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 15:30:37 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 15:30:38 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:30:38 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 15:30:38 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:30:38 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:30:38 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 15:30:38 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:30:38] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 15:32:23 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 15:32:24 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:32:25 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 15:32:25 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:32:25 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:32:25 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:32:25] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 15:33:05 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMCwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3ODA5MDc1NDV9.PqTG03dHHNAfmiWiSppWfo3u7absc8AZ4c7YflAet0c "HTTP/2 200 OK"
+2026-06-01 15:33:05 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:33:05 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:33:05 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:33:05] "POST /api/logout HTTP/1.1" 200 -
+2026-06-01 15:33:28 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 15:33:28 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:33:29 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 15:33:29 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:33:29 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:33:29 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:33:29] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 15:34:18 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 15:34:19 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:34:19 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 15:34:20 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:34:20 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:34:20 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:34:20] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 15:34:43 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 15:34:43 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:34:44 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 15:34:44 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:34:44 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:34:44 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:34:44] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 15:34:50 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMCwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3ODA5MDc2ODR9.3mXv6Dp4xvaCjplC0s5gkD6XyZlNXZt0vJX4Dbm3Pu4 "HTTP/2 200 OK"
+2026-06-01 15:34:51 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:34:51 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:34:51 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:34:51] "POST /api/logout HTTP/1.1" 200 -
+2026-06-01 15:34:58 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 15:34:58 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 15:34:59 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 15:34:59 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.20 "HTTP/2 200 OK"
+2026-06-01 15:34:59 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 15:34:59 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 15:34:59] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:30:15 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/token?grant_type=refresh_token "HTTP/2 200 OK"
+2026-06-01 16:30:15 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/token?grant_type=refresh_token "HTTP/2 200 OK"
+2026-06-01 16:36:19 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 16:36:19 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 16:36:22 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 16:36:23 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 16:36:24 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 16:36:24 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 16:36:25 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 16:36:25 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:36:25 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 16:36:25 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:36:25] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 16:36:40 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 16:36:41 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:36:41 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 16:36:41 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:36:41 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:36:41 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 16:36:41 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:36:41] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 16:36:59 - INFO - [LOGIN] - Mencoba login untuk email: 
+2026-06-01 16:36:59 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq. "HTTP/2 200 OK"
+2026-06-01 16:36:59 - WARNING - [LOGIN] - Gagal login: Email '' tidak terdaftar
+2026-06-01 16:36:59 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:36:59] "[33mPOST /api/login HTTP/1.1[0m" 404 -
+2026-06-01 16:37:08 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 16:37:09 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:37:09 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 16:37:09 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.21 "HTTP/2 200 OK"
+2026-06-01 16:37:09 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:37:09 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:37:09] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:37:15 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMSwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3ODA5MTE0Mjl9.vlBjCkAiRwrcaHiVliaNbJaBk3OYlCp22DDDIPZJpcg "HTTP/2 200 OK"
+2026-06-01 16:37:15 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.21 "HTTP/2 200 OK"
+2026-06-01 16:37:15 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:37:15 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:37:15] "POST /api/logout HTTP/1.1" 200 -
+2026-06-01 16:37:27 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 16:37:28 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:37:28 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 16:37:28 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.21 "HTTP/2 200 OK"
+2026-06-01 16:37:28 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:37:28 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:37:28] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:38:16 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 16:38:17 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:38:17 - WARNING - [LOGIN] - Gagal login: Email 'ff729340@gmail.com' tidak terdaftar
+2026-06-01 16:38:17 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:38:17] "[33mPOST /api/login HTTP/1.1[0m" 404 -
+2026-06-01 16:38:55 - INFO - [LOGIN] - Menerima request registrasi untuk email: ff729340@gmail.com
+2026-06-01 16:38:55 - INFO - [LOGIN] - Mengirim kode OTP ke email: ff729340@gmail.com
+2026-06-01 16:39:00 - INFO - [LOGIN] - Email OTP sukses terkirim ke ff729340@gmail.com
+2026-06-01 16:39:00 - INFO - [LOGIN] - Mencoba signup ke Supabase Auth untuk email: ff729340@gmail.com
+2026-06-01 16:39:01 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/signup "HTTP/2 200 OK"
+2026-06-01 16:39:01 - INFO - [LOGIN] - Memasukkan data user ke tabel 'users' untuk email: ff729340@gmail.com
+2026-06-01 16:39:01 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users "HTTP/2 201 Created"
+2026-06-01 16:39:01 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:39:01 - INFO - [LOGIN] - Registrasi Berhasil! Akun dibuat untuk email: ff729340@gmail.com
+2026-06-01 16:39:01 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:39:01] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2026-06-01 16:39:20 - INFO - [LOGIN] - Menerima request verifikasi OTP untuk email: ff729340@gmail.com
+2026-06-01 16:39:20 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:39:20 - INFO - [LOGIN] - OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: ff729340@gmail.com
+2026-06-01 16:39:20 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:39:20 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:39:20 - INFO - [LOGIN] - Verifikasi sukses. Akun aktif untuk email: ff729340@gmail.com
+2026-06-01 16:39:20 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:39:20] "POST /api/verify-otp HTTP/1.1" 200 -
+2026-06-01 16:45:50 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-06-01 16:45:52 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:45:52 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-06-01 16:45:52 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-06-01 16:45:52 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:45:52 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:45:52] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:47:47 - INFO - [LOGIN] - Mencoba login untuk email: ff729340@gmail.com
+2026-06-01 16:47:48 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.ff729340%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:47:48 - INFO - [LOGIN] - Login BERHASIL untuk email: ff729340@gmail.com
+2026-06-01 16:47:48 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.22 "HTTP/2 200 OK"
+2026-06-01 16:47:48 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:47:48 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:47:48] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:48:03 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMiwiZW1haWwiOiJmZjcyOTM0MEBnbWFpbC5jb20iLCJleHAiOjE3ODA5MTIwNjh9.-ejmfnKfcvIu_95QJEz533vNrY3nB0nGKJtQ63Oms5I "HTTP/2 200 OK"
+2026-06-01 16:48:03 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.22 "HTTP/2 200 OK"
+2026-06-01 16:48:03 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:48:03 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:48:03] "POST /api/logout HTTP/1.1" 200 -
+2026-06-01 16:49:17 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-06-01 16:49:17 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:49:18 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-06-01 16:49:18 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-06-01 16:49:18 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:49:18 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:49:18] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 16:49:54 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=id%2Cusername&token=eq.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZW1haWwiOiJmYWhyaXByYXRhbWExNDIwNUBnbWFpbC5jb20iLCJleHAiOjE3ODA5MTIxNTh9.8uSxArG4DSAy3itE8psqUNlIceIXQCX1eaKm9tH4UWk "HTTP/2 200 OK"
+2026-06-01 16:49:54 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-06-01 16:49:54 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:49:54 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:49:54] "POST /api/logout HTTP/1.1" 200 -
+2026-06-01 16:56:55 - INFO - [LOGIN] - Mencoba login untuk email: fahripratama14205@gmail.com
+2026-06-01 16:56:56 - INFO - [LOGIN] - HTTP Request: GET https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?select=%2A&email=eq.fahripratama14205%40gmail.com "HTTP/2 200 OK"
+2026-06-01 16:56:57 - INFO - [LOGIN] - Login BERHASIL untuk email: fahripratama14205@gmail.com
+2026-06-01 16:56:57 - INFO - [LOGIN] - HTTP Request: PATCH https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/users?id=eq.11 "HTTP/2 200 OK"
+2026-06-01 16:56:57 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/rest/v1/activity_logs "HTTP/2 201 Created"
+2026-06-01 16:56:57 - INFO - [LOGIN] - 10.137.100.226 - - [01/Jun/2026 16:56:57] "POST /api/login HTTP/1.1" 200 -
+2026-06-01 17:38:54 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/token?grant_type=refresh_token "HTTP/2 200 OK"
+2026-06-01 17:38:54 - INFO - [LOGIN] - HTTP Request: POST https://sipjkdlfjzmxptldxgxa.supabase.co/auth/v1/token?grant_type=refresh_token "HTTP/2 200 OK"
