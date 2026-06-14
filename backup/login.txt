@@ -4,9 +4,8 @@ import traceback
 import datetime
 from datetime import timezone
 
-from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel
-from passlib.context import CryptContext
+from flask import Blueprint, request, jsonify
+from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 
 from config.database import get_supabase_client
@@ -18,9 +17,7 @@ load_dotenv()
 # CONFIG
 # ==========================================================
 supabase = get_supabase_client()
-
-# Mengganti flask_bcrypt dengan passlib (kompatibel dengan hash bcrypt yang sudah ada)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+bcrypt = Bcrypt()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -29,29 +26,39 @@ if not SECRET_KEY:
 
 
 # ==========================================================
-# PYDANTIC SCHEMA (Pengganti request.get_json())
+# BLUEPRINT
 # ==========================================================
-class LoginRequest(BaseModel):
-    email: str
-    password: str
-
-
-# ==========================================================
-# ROUTER INITIALIZATION (Pengganti Blueprint)
-# ==========================================================
-def init_login_router():
-    login_router = APIRouter()
+def init_login_blueprint():
+    login_blueprint = Blueprint("login", __name__)
 
     # ======================================================
     # LOGIN
     # ======================================================
-    @login_router.post("/login")
-    async def login_user(request_data: LoginRequest):
+    @login_blueprint.route("/login", methods=["POST"])
+    def login_user():
 
         try:
-            # FastAPI & Pydantic sudah menangani validasi tipe data dan kelengkapan
-            email = str(request_data.email).strip().lower()
-            password = str(request_data.password)
+            data = request.get_json(silent=True)
+
+            if not data:
+                return jsonify({
+                    "status": "error",
+                    "message": "Request tidak valid"
+                }), 400
+
+            email = str(
+                data.get("email", "")
+            ).strip().lower()
+
+            password = str(
+                data.get("password", "")
+            )
+
+            if not email or not password:
+                return jsonify({
+                    "status": "error",
+                    "message": "Email dan password wajib diisi"
+                }), 400
 
             print(f"[LOGIN ATTEMPT] {email}")
 
@@ -73,14 +80,10 @@ def init_login_router():
                     f"Login gagal: email tidak ditemukan ({email})"
                 )
 
-                # Mengganti return jsonify ke raise HTTPException
-                raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail={
-                        "status": "error",
-                        "message": "Email tidak terdaftar"
-                    }
-                )
+                return jsonify({
+                    "status": "error",
+                    "message": "Email tidak terdaftar"
+                }), 404
 
             user = users[0]
 
@@ -100,20 +103,19 @@ def init_login_router():
                     user_id
                 )
 
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail={
-                        "status": "error",
-                        "message": "Password user tidak valid"
-                    }
-                )
+                return jsonify({
+                    "status": "error",
+                    "message": "Password user tidak valid"
+                }), 400
 
             # ==================================================
             # CEK PASSWORD
             # ==================================================
             try:
-                # Mengganti bcrypt.check_password_hash dengan pwd_context.verify
-                password_match = pwd_context.verify(password, stored_hash)
+                password_match = bcrypt.check_password_hash(
+                    stored_hash,
+                    password
+                )
             except Exception:
                 password_match = False
 
@@ -123,13 +125,10 @@ def init_login_router():
                     user_id
                 )
 
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail={
-                        "status": "error",
-                        "message": "Password salah"
-                    }
-                )
+                return jsonify({
+                    "status": "error",
+                    "message": "Password salah"
+                }), 401
 
             # ==================================================
             # CEK OTP VERIFIED
@@ -140,13 +139,10 @@ def init_login_router():
                     user_id
                 )
 
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail={
-                        "status": "error",
-                        "message": "Akun belum verifikasi OTP"
-                    }
-                )
+                return jsonify({
+                    "status": "error",
+                    "message": "Akun belum verifikasi OTP"
+                }), 403
 
             # ==================================================
             # GENERATE JWT
@@ -193,8 +189,7 @@ def init_login_router():
             # ==================================================
             # RESPONSE
             # ==================================================
-            # Di FastAPI, cukup return dictionary langsung (otomatis diubah ke JSON)
-            return {
+            return jsonify({
                 "status": "success",
                 "message": "Login berhasil",
                 "token": token,
@@ -205,13 +200,10 @@ def init_login_router():
                     "email": email,
                     "role": role
                 }
-            }
-
-        except HTTPException:
-            # Re-raise HTTPException agar format error FastAPI tetap konsisten
-            raise
+            }), 200
 
         except Exception as e:
+
             print("\n========== LOGIN ERROR ==========")
             traceback.print_exc()
             print("=================================\n")
@@ -223,13 +215,10 @@ def init_login_router():
             except Exception:
                 pass
 
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail={
-                    "status": "error",
-                    "message": "Terjadi kesalahan server",
-                    "error": str(e)
-                }
-            )
+            return jsonify({
+                "status": "error",
+                "message": "Terjadi kesalahan server",
+                "error": str(e)
+            }), 500
 
-    return login_router
+    return login_blueprint

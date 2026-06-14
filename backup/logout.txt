@@ -1,10 +1,5 @@
 import os
-import traceback
-from typing import Optional
-
-from fastapi import APIRouter, Request, HTTPException, status, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-
+from flask import Blueprint, request, jsonify
 from config.database import get_supabase_client
 from dotenv import load_dotenv
 
@@ -15,21 +10,10 @@ load_dotenv()
 # ==========================================================
 supabase = get_supabase_client()
 
-# Inisialisasi HTTPBearer untuk menangkap token dari header Authorization
-security = HTTPBearer()
-
 
 # ==========================================================
-# HELPER FUNCTIONS
+# ACTIVITY LOG HELPER
 # ==========================================================
-def get_client_ip(request: Request) -> Optional[str]:
-    """Mengambil IP address client (mendukung proxy seperti Nginx/Cloudflare)"""
-    forwarded = request.headers.get("X-Forwarded-For")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else None
-
-
 def save_activity_log(user_id=None, activity="", ip_address=None, user_agent=None):
     try:
         supabase.table("activity_logs").insert({
@@ -43,31 +27,32 @@ def save_activity_log(user_id=None, activity="", ip_address=None, user_agent=Non
 
 
 # ==========================================================
-# ROUTER INITIALIZER (Pengganti Blueprint)
+# BLUEPRINT INITIALIZER
 # ==========================================================
-def init_logout_router():
-    logout_router = APIRouter()
+def init_logout_blueprint():
+    logout_bp = Blueprint('logout', __name__)
 
     # ======================================================
     # LOGOUT ENDPOINT
     # ======================================================
-    @logout_router.post('/logout')
-    async def logout_user(
-        request: Request,
-        credentials: HTTPAuthorizationCredentials = Depends(security)
-    ):
-        """
-        Endpoint untuk logout user.
-        FastAPI secara otomatis memvalidasi apakah header 'Authorization: Bearer xxx' ada.
-        Jika tidak ada, akan langsung error 403 sebelum masuk ke fungsi ini.
-        """
-        # Ambil metadata request untuk logging
-        ip_addr = get_client_ip(request)
-        user_agnt = request.headers.get('User-Agent', 'Unknown Device')
-
+    @logout_bp.route('/logout', methods=['POST'])
+    def logout_user():
         try:
-            # FastAPI (melalui HTTPBearer) sudah mengekstrak token-nya
-            token = credentials.credentials
+            # 1. Ambil token JWT dari Header Authorization
+            auth_header = request.headers.get('Authorization')
+            
+            if not auth_header or not auth_header.startswith('Bearer '):
+                return jsonify({
+                    "status": "error",
+                    "message": "Token tidak ditemukan atau format tidak valid"
+                }), 401
+            
+            # Ekstrak string token setelah teks "Bearer "
+            token = auth_header.split(" ")[1].strip()
+            
+            # Get request metadata untuk logging
+            ip_addr = request.remote_addr
+            user_agnt = request.headers.get('User-Agent', 'Unknown Device')
 
             # ==================================================
             # CARI USER BERDASARKAN TOKEN
@@ -84,13 +69,10 @@ def init_logout_router():
                     ip_address=ip_addr,
                     user_agent=user_agnt
                 )
-                raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail={
-                        "status": "error",
-                        "message": "Sesi login tidak valid atau Anda sudah logout"
-                    }
-                )
+                return jsonify({
+                    "status": "error",
+                    "message": "Sesi login tidak valid atau Anda sudah logout"
+                }), 404
             
             user_id = user_check.data[0]['id']
             username = user_check.data[0]['username']
@@ -116,18 +98,21 @@ def init_logout_router():
             # ==================================================
             # RESPONSE SUKSES
             # ==================================================
-            return {
+            return jsonify({
                 "status": "success",
                 "message": "Logout berhasil dilakukan"
-            }
+            }), 200
 
-        except HTTPException:
-            # Re-raise error HTTP yang sudah diatur
-            raise
-            
         except Exception as e:
             print(f"[LOGOUT ERROR] {str(e)}")
-            traceback.print_exc()
+            
+            # Ambil metadata request secara aman jika konteks request masih tersedia
+            try:
+                ip_addr = request.remote_addr
+                user_agnt = request.headers.get("User-Agent")
+            except Exception:
+                ip_addr = None
+                user_agnt = None
 
             save_activity_log(
                 activity=f"Server error logout: {str(e)}",
@@ -135,12 +120,9 @@ def init_logout_router():
                 user_agent=user_agnt
             )
 
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail={
-                    "status": "error",
-                    "message": "Terjadi kesalahan server saat proses logout"
-                }
-            )
+            return jsonify({
+                "status": "error",
+                "message": "Terjadi kesalahan server saat proses logout"
+            }), 500
 
-    return logout_router
+    return logout_bp

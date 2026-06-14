@@ -1,345 +1,622 @@
 import os
 import jwt
+import traceback
 import datetime
-from datetime import timezone
 import random
-import logging
-from flask import Blueprint, request, jsonify
-from flask_bcrypt import Bcrypt
-from flask_mail import Message
+from datetime import timezone
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, EmailStr
+from passlib.context import CryptContext
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+from supabase_auth.errors import AuthApiError 
+
 from config.database import get_supabase_client
 from dotenv import load_dotenv
+from app.services.activity_logger import ActivityLogger
 
 load_dotenv()
 
+# ==========================================================
+# CONFIGURATION
+# ==========================================================
+
 supabase = get_supabase_client()
-bcrypt = Bcrypt()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# --- KONFIGURASI LOGGING UNTUK REGISTER LOKAL ---
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-LOG_DIR = os.path.join(BASE_DIR, 'logs')
-LOG_FILE = os.path.join(LOG_DIR, 'log.txt')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY tidak ditemukan di file .env")
 
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-
-logging.basicConfig(
-    filename=LOG_FILE,
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - [REGISTER] - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
+# ==========================================================
+# HELPER FUNCTIONS
+# ==========================================================
 
 def generate_otp():
     return str(random.randint(1000, 9999))
 
-def init_register_blueprint(mail):
-    register_blueprint = Blueprint('register', __name__)
 
-    @register_blueprint.route('/register', methods=['POST'])
-    def register_user():
-        data = request.json
-        email = data.get('email')
-        password = data.get('password')
-        username = data.get('username')
-        fullname = data.get('fullname')
-        provinsi = data.get('provinsi')
-        role = data.get('role', 'user')
+def get_email_html(fullname, otp_code):
+    return f"""
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 580px; margin: 40px auto; border-radius: 20px; overflow: hidden; background: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
+        
+        <div style="background: linear-gradient(135deg, #361F1A 0%, #5D4037 100%); padding: 40px 20px; text-align: center; color: white;">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏕️</div>
+            <h1 style="margin: 0; font-size: 28px; letter-spacing: 0.5px;">Scoutify</h1>
+            <p style="margin: 8px 0 0; font-size: 14px; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px;">Verification Center</p>
+        </div>
 
-        logging.info(f"Menerima request registrasi untuk email: {email}")
+        <div style="padding: 40px 30px; color: #444;">
+            <h2 style="margin-top: 0; font-size: 22px; color: #361F1A;">Halo, {fullname}! 👋</h2>
+            <p style="font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 30px;">
+                Seseorang baru saja meminta kode verifikasi untuk akun Scoutify kamu. Jika ini bukan kamu, harap abaikan email ini.
+            </p>
 
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="font-size: 13px; color: #999; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Kode OTP kamu</p>
+                <div style="display: inline-block; padding: 18px 40px; font-size: 38px; font-weight: 800; letter-spacing: 12px; 
+                            color: #7D562D; background: #F6F3EE; border-radius: 16px; border: 2px solid #EBE5DB;">
+                    {otp_code}
+                </div>
+            </div>
+
+            <div style="background: #FFFBF5; border-left: 4px solid #7D562D; padding: 16px; border-radius: 4px; font-size: 14px; color: #5D4037; margin-top: 30px;">
+                <strong>Keamanan Akun:</strong> Kode ini hanya berlaku selama <strong>10 menit</strong>. Mohon untuk tidak membagikan kode ini kepada siapapun, termasuk pihak Scoutify.
+            </div>
+        </div>
+
+        <div style="background: #FAFAFA; padding: 20px; text-align: center; font-size: 12px; color: #999;">
+            <p style="margin: 0;">Pesan ini dikirim otomatis oleh sistem Scoutify.</p>
+            <p style="margin: 5px 0 0;">&copy; 2026 Scoutify Indonesia. All rights reserved.</p>
+        </div>
+    </div>
+    """
+
+# ==========================================================
+# PYDANTIC SCHEMAS (Pengganti request.get_json())
+# ==========================================================
+
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: str
+    username: str
+    fullname: str
+    provinsi: Optional[str] = None
+    role: str = "user"
+    image: str = "default_profile.png"
+
+class OtpRequest(BaseModel):
+    email: EmailStr
+    otp: str
+
+class ResendOtpRequest(BaseModel):
+    email: EmailStr
+
+# ==========================================================
+# ROUTER INITIALIZER (Pengganti Blueprint)
+# ==========================================================
+def init_register_router(mail_conf: ConnectionConfig):
+    register_router = APIRouter()
+    
+    # Inisialisasi FastMail
+    mail = FastMail(mail_conf)
+
+    # ======================================================
+    # 1. REGISTER
+    # ======================================================
+    @register_router.post("/register", status_code=status.HTTP_201_CREATED)
+    async def register_user(request_data: RegisterRequest):
         try:
-            # 1. Generate OTP & Atur Waktu Expired 10 Menit
+            email = str(request_data.email).strip().lower()
+            password = str(request_data.password)
+            username = request_data.username
+            fullname = request_data.fullname
+            province = request_data.provinsi
+            role = request_data.role
+            image = request_data.image
+
+            # Supabase Auth
+            try:
+                auth = supabase.auth.sign_up({"email": email, "password": password})
+                if not auth.user:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST, 
+                        detail={"status": "error", "message": "Gagal create auth user"}
+                    )
+            except AuthApiError as e:
+                if "User already registered" in str(e):
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT, 
+                        detail={"status": "error", "message": "Email sudah terdaftar"}
+                    )
+                raise e 
+
+            # Data Prep
             otp_code = generate_otp()
-            waktu_sekarang = datetime.datetime.now(timezone.utc)
-            waktu_expired = waktu_sekarang + datetime.timedelta(minutes=10)
-            otp_expired_at = waktu_expired.isoformat()
-
-            # 2. Kirim Email OTP via Flask-Mail
-            logging.info(f"Mengirim kode OTP ke email: {email}")
-            msg = Message(
-                subject="Kode Verifikasi OTP Scoutify",
-                recipients=[email]
-            )
-            msg.body = f"""Salam Pramuka, {fullname}!
+            otp_expired_at = (datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)).isoformat()
             
-Berikut adalah kode OTP untuk memverifikasi pendaftaran akun Scoutify kamu:
-
-👉 {otp_code} 👈
-
-Kode ini hanya berlaku selama 10 menit bray. Jangan berikan kode ini kepada siapa pun!
-
-Salam,
-Scoutify Team
-"""
-            mail.send(msg)
-            logging.info(f"Email OTP sukses terkirim ke {email}")
-
-            # 3. Hashing Password
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-            # 4. Registrasi ke Supabase Auth
-            logging.info(f"Mencoba signup ke Supabase Auth untuk email: {email}")
-            auth_response = supabase.auth.sign_up({
+            # Mengganti flask_bcrypt dengan passlib
+            hashed_password = password
+            
+            payload = {
+                "user_id": auth.user.id,
                 "email": email,
-                "password": password, 
-            })
+                "exp": datetime.datetime.now(timezone.utc) + datetime.timedelta(days=7)
+            }
+            token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
-            if auth_response.user is not None:
-                # 5. Generate JWT Token
-                payload = {
-                    'user_id': auth_response.user.id,
-                    'email': email,
-                    'exp': datetime.datetime.now(timezone.utc) + datetime.timedelta(days=7)
-                }
-                token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+            user_data = {
+                "id": auth.user.id,
+                "username": username,
+                "fullname": fullname,
+                "email": email,
+                "province": province,
+                "password": hashed_password,
+                "otp": int(otp_code),
+                "otp_expired_at": otp_expired_at,
+                "token": token,
+                "role": role,
+                "points": 0,
+                "image": image,
+                "is_verified": False
+            }
 
-                # 6. Susun data user lengkap ke tabel 'users'
-                user_data = {
-                    "username": username,
-                    "fullname": fullname,
-                    "email": email,
-                    "provinsi": provinsi,
-                    "password": hashed_password, 
-                    "token": token,             
-                    "role": role,
-                    "points": 0,
-                    "images": data.get('images', 'default_profile.png'),
-                    "otp": otp_code,          
-                    "otp_expired_at": otp_expired_at,  
-                    "is_verified": False             
-                }
-                
-                logging.info(f"Memasukkan data user ke tabel 'users' untuk email: {email}")
-                db_response = supabase.table("users").insert(user_data).execute()
+            supabase.table("users").insert(user_data).execute()
+            ActivityLogger.log(f"Registrasi berhasil ({email})", auth.user.id)
 
-                # --- AKTIVITAS AUDIT LOG KE DATABASE ---
-                try:
-                    new_user_id = db_response.data[0]['id'] if db_response.data else None
-                    if new_user_id:
-                        log_data = {
-                            "user_id": new_user_id,
-                            "activity": f"User {username} berhasil melakukan registrasi akun baru (Belum Verifikasi).",
-                            "ip_address": request.remote_addr,
-                            "user_agent": request.headers.get('User-Agent', 'Unknown Device')
-                        }
-                        supabase.table('activity_logs').insert(log_data).execute()
-                except Exception as log_error:
-                    print(f"⚠️ WARNING LOGGING REGISTER: Gagal simpan log. Detail: {str(log_error)}")
-
-                logging.info(f"Registrasi Berhasil! Akun dibuat untuk email: {email}")
-                return jsonify({
-                    "status": "success",
-                    "message": "User berhasil didaftarkan. Silakan cek email untuk verifikasi OTP.",
-                    "token": token,
-                    "data": db_response.data
-                }), 201
-                
-            else:
-                logging.error(f"Gagal registrasi: Auth response user bernilai None untuk email: {email}")
-                return jsonify({"status": "error", "message": "User null, cek auth"}), 400
-                
-        except Exception as e:
-            logging.error(f"Error pada proses registrasi email '{email}': {str(e)}", exc_info=True)
-            return jsonify({"status": "error", "message": str(e)}), 400
-
-    @register_blueprint.route('/verify-otp', methods=['POST'])
-    def verify_otp():
-        data = request.json
-        email = data.get('email')
-        otp_input = data.get('otp')
-
-        logging.info(f"Menerima request verifikasi OTP untuk email: {email}")
-
-        try:
-            query = supabase.table("users").select("*").eq("email", email).execute()
-            user_list = query.data
-
-            if not user_list:
-                logging.warning(f"Verifikasi OTP gagal: Email '{email}' tidak ditemukan")
-                return jsonify({"status": "error", "message": "User tidak ditemukan"}), 404
-
-            user = user_list[0]
-            user_id = user.get('id')
-            username = user.get('username')
-            stored_otp = user.get('otp')
-            stored_expired_str = user.get('otp_expired_at')
-
-            if not stored_otp:
-                logging.warning(f"Verifikasi OTP gagal: OTP sudah hangus/kosong di DB untuk email: {email}")
-                return jsonify({"status": "error", "message": "Kode OTP sudah hangus atau tidak valid!"}), 400
-
-            cleaned_time_str = stored_expired_str.replace('Z', '+00:00') if stored_expired_str else ""
-            otp_expired_time = datetime.datetime.fromisoformat(cleaned_time_str)
-            waktu_sekarang = datetime.datetime.now(timezone.utc)
-
-            if waktu_sekarang > otp_expired_time:
-                logging.warning(f"Verifikasi OTP gagal: OTP Kadaluarsa untuk email: {email}")
-                supabase.table("users").update({"otp": None, "otp_expired_at": None}).eq("email", email).execute()
-                return jsonify({"status": "error", "message": "Kode OTP sudah kadaluarsa (lebih dari 10 menit) bray!"}), 400
-
-            if str(stored_otp) == str(otp_input):
-                logging.info(f"OTP cocok! Memperbarui status 'is_verified' menjadi True untuk email: {email}")
-                
-                # --- 🔥 AMBIL DATA TOKEN LAMA ATAU GENERATE BARU BIAR FLUTTER TIDAK NULL 🔥 ---
-                # Kita generate token baru yang fresh untuk login otomatis setelah OTP sukses
-                payload = {
-                    'user_id': user_id,
-                    'email': email,
-                    'exp': datetime.datetime.now(timezone.utc) + datetime.timedelta(days=7)
-                }
-                token_aktif = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
-                # Update status terverifikasi dan tempel token aktifnya di DB bray
-                supabase.table("users").update({
-                    "is_verified": True,
-                    "token": token_aktif, # Update token terbaru ke DB
-                    "otp": None,         
-                    "otp_expired_at": None    
-                }).eq("email", email).execute()
-
-                # --- AKTIVITAS AUDIT LOG KE DATABASE ---
-                try:
-                    log_data = {
-                        "user_id": user_id,
-                        "activity": f"User {username} sukses memverifikasi kode OTP. Akun kini berstatus AKTIF bray.",
-                        "ip_address": request.remote_addr,
-                        "user_agent": request.headers.get('User-Agent', 'Unknown Device')
-                    }
-                    supabase.table('activity_logs').insert(log_data).execute()
-                except Exception as log_error:
-                    print(f"⚠️ WARNING LOGGING VERIFY: Gagal simpan log. Detail: {str(log_error)}")
-
-                logging.info(f"Verifikasi sukses. Akun aktif untuk email: {email}")
-                
-                # --- SINKRONISASI DATANYA DI SINI BRAY! ---
-                return jsonify({
-                    "status": "success",
-                    "message": "Verifikasi OTP Berhasil, akun kamu sudah aktif!",
-                    "token": token_aktif, # Kunci penyelamat agar Flutter tidak membaca null
-                    "data": [{
-                        "id": user_id,
-                        "email": email,
-                        "username": username
-                    }]
-                }), 200
-            else:
-                logging.warning(f"Verifikasi OTP gagal: Input OTP salah untuk email: {email}")
-                return jsonify({"status": "error", "message": "Kode OTP yang kamu masukkan salah bray!"}), 400
-
-        except Exception as e:
-            logging.error(f"Error pada verifikasi OTP email '{email}': {str(e)}", exc_info=True)
-            return jsonify({"status": "error", "message": str(e)}), 400
-
-    @register_blueprint.route('/resend-otp', methods=['POST'])
-    def resend_otp():
-        data = request.json
-        email = data.get('email')
-
-        if not email:
-            return jsonify({"status": "error", "message": "Email tidak boleh kosong bray!"}), 400
-
-        logging.info(f"Menerima request kirim ulang OTP untuk email: {email}")
-
-        try:
-            query = supabase.table("users").select("*").eq("email", email).execute()
-            user_list = query.data
-
-            if not user_list:
-                logging.warning(f"Gagal resend OTP: Email '{email}' belum terdaftar")
-                return jsonify({"status": "error", "message": "Email belum terdaftar di database bray!"}), 404
-
-            user = user_list[0]
-            user_id = user.get('id')
-            username = user.get('username')
-
-            if user.get('is_verified') == True:
-                logging.warning(f"Gagal resend OTP: Akun email '{email}' terpantau sudah aktif")
-                return jsonify({"status": "error", "message": "Akun ini sudah aktif bray, langsung login aja!"}), 400
-
-            new_otp = generate_otp()
-            waktu_expired = datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)
-            otp_expired_at = waktu_expired.isoformat()
-
-            msg = Message(subject="Kode OTP Baru Scoutify", recipients=[email])
-            msg.body = f"Kamu telah meminta pengiriman ulang kode verifikasi. Berikut adalah kode OTP baru kamu:\n\n👉 {new_otp} 👈"
-            mail.send(msg)
-            logging.info(f"Email OTP baru berhasil dikirim ulang ke {email}")
-
-            supabase.table("users").update({
-                "otp": new_otp,
-                "otp_expired_at": otp_expired_at
-            }).eq("email", email).execute()
-
-            # --- AKTIVITAS AUDIT LOG KE DATABASE ---
+            # Send Email menggunakan FastAPI-Mail
             try:
-                log_data = {
-                    "user_id": user_id,
-                    "activity": f"User {username} meminta pengiriman ulang kode OTP registrasi.",
-                    "ip_address": request.remote_addr,
-                    "user_agent": request.headers.get('User-Agent', 'Unknown Device')
-                }
-                supabase.table('activity_logs').insert(log_data).execute()
-            except Exception as log_error:
-                print(f"⚠️ WARNING LOGGING RESEND: Gagal simpan log. Detail: {str(log_error)}")
+                message = MessageSchema(
+                    subject="Verifikasi Akun Scoutify", 
+                    recipients=[email], # Harus berupa list
+                    body=get_email_html(fullname, otp_code),
+                    subtype="html"
+                )
+                await mail.send_message(message)
+            except Exception as e:
+                print(f"[MAIL ERROR] {e}")
 
-            return jsonify({"status": "success", "message": "Kode OTP baru berhasil dikirim!"}), 200
+            return {"status": "success", "message": "Registrasi berhasil, cek email", "token": token}
+
+        except HTTPException:
+            # Re-raise error HTTP yang sudah diatur di atas
+            raise
         except Exception as e:
-            logging.error(f"Error pada resend OTP email '{email}': {str(e)}", exc_info=True)
-            return jsonify({"status": "error", "message": str(e)}), 400
+            traceback.print_exc()
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail={"status": "error", "message": "Server error", "error": str(e)}
+            )
 
-    @register_blueprint.route('/resend-otp-reset', methods=['POST'])
-    def resend_otp_reset():
-        data = request.json
-        email = data.get('email')
-
-        if not email:
-            return jsonify({"status": "error", "message": "Email tidak boleh kosong bray!"}), 400
-
-        logging.info(f"Menerima request kirim ulang OTP (Reset Password) untuk email: {email}")
-
+    # ======================================================
+    # 2. VERIFY OTP
+    # ======================================================
+    @register_router.post("/verify-otp")
+    async def verify_otp(request_data: OtpRequest):
         try:
-            query = supabase.table("users").select("*").eq("email", email).execute()
-            user_list = query.data
+            email = str(request_data.email).strip().lower()
+            otp_input = str(request_data.otp)
 
-            if not user_list:
-                logging.warning(f"Gagal resend OTP reset: Email '{email}' tidak terdaftar")
-                return jsonify({"status": "error", "message": "Email belum terdaftar bray!"}), 404
+            res = supabase.table("users").select("*").eq("email", email).execute()
+            if not res.data:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, 
+                    detail={"status": "error", "message": "User tidak ditemukan"}
+                )
 
-            user = user_list[0]
-            user_id = user.get('id')
-            username = user.get('username')
+            user = res.data[0]
 
-            new_otp = generate_otp()
-            waktu_expired = datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)
-            otp_expired_at = waktu_expired.isoformat()
+            if str(user["otp"]) != otp_input:
+                ActivityLogger.log("Verifikasi OTP gagal (kode salah)", user["id"])
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST, 
+                    detail={"status": "error", "message": "OTP salah"}
+                )
 
-            msg = Message(subject="Kode OTP Reset Password Scoutify", recipients=[email])
-            msg.body = f"Berikut adalah kode OTP baru untuk mereset password akun Scoutify kamu bray:\n\n👉 {new_otp} 👈"
-            mail.send(msg)
-            logging.info(f"Email OTP Reset password berhasil dikirim ke {email}")
+            expired = datetime.datetime.fromisoformat(user["otp_expired_at"].replace("Z", "+00:00"))
+            if datetime.datetime.now(timezone.utc) > expired:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST, 
+                    detail={"status": "error", "message": "OTP expired"}
+                )
 
             supabase.table("users").update({
-                "otp": new_otp,
-                "otp_expired_at": otp_expired_at
-            }).eq("email", email).execute()
+                "is_verified": True,
+                "otp": None,
+                "otp_expired_at": None
+            }).eq("id", user["id"]).execute()
+
+            # PERBAIKAN: Kirim juga data user yang aman ke Frontend
+            safe_user_data = {
+                "id": str(user["id"]),
+                "username": user.get("username", ""),
+                "fullname": user.get("fullname", ""),
+                "email": user.get("email", ""),
+                "role": user.get("role", "user"),
+                "province": user.get("province", ""),
+                "points": user.get("points", 0),
+                "image": user.get("image", "default_profile.png")
+            }
+
+            return {
+                "status": "success", 
+                "message": "Akun berhasil diverifikasi",
+                "token": user["token"],
+                "user": safe_user_data # Data ini yang dibutuhkan SessionManager di Flutter
+            }
+
+        except HTTPException:
+            raise
+        except Exception as e:
+            traceback.print_exc()
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail={"status": "error", "message": "Server error"}
+            )
+
+    # ======================================================
+    # 3. RESEND OTP
+    # ======================================================
+    @register_router.post("/resend-otp")
+    async def resend_otp(request_data: ResendOtpRequest):
+        try:
+            email = str(request_data.email).strip().lower()
             
-            # --- AKTIVITAS AUDIT LOG KE DATABASE ---
-            try:
-                log_data = {
-                    "user_id": user_id,
-                    "activity": f"User {username} meminta kode OTP untuk keperluan reset password.",
-                    "ip_address": request.remote_addr,
-                    "user_agent": request.headers.get('User-Agent', 'Unknown Device')
-                }
-                supabase.table('activity_logs').insert(log_data).execute()
-            except Exception as log_error:
-                print(f"⚠️ WARNING LOGGING RESET: Gagal simpan log. Detail: {str(log_error)}")
+            res = supabase.table("users").select("id, fullname").eq("email", email).execute()
+            if not res.data:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, 
+                    detail={"status": "error", "message": "User tidak ditemukan"}
+                )
+            
+            user = res.data[0]
+            new_otp = generate_otp()
+            new_expired = (datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)).isoformat()
 
-            return jsonify({"status": "success", "message": "Kode OTP reset password berhasil dikirim ulang!"}), 200
+            supabase.table("users").update({
+                "otp": int(new_otp),
+                "otp_expired_at": new_expired
+            }).eq("id", user["id"]).execute()
+
+            # Kirim Ulang Email
+            message = MessageSchema(
+                subject="OTP Baru Scoutify", 
+                recipients=[email],
+                body=get_email_html(user["fullname"], new_otp),
+                subtype="html"
+            )
+            await mail.send_message(message)
+
+            return {"status": "success", "message": "OTP baru terkirim"}
+            
+        except HTTPException:
+            raise
         except Exception as e:
-            logging.error(f"Error pada resend OTP reset email '{email}': {str(e)}", exc_info=True)
-            return jsonify({"status": "error", "message": str(e)}), 400
+            traceback.print_exc()
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail={"status": "error", "message": "Gagal resend OTP"}
+            )
 
-    return register_blueprint
+    return register_router
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import os
+# import jwt
+# import traceback
+# import datetime
+# import random
+# from datetime import timezone
+# from typing import Optional
+
+# from fastapi import APIRouter, HTTPException, status
+# from pydantic import BaseModel, EmailStr
+# from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+# from supabase_auth.errors import AuthApiError 
+
+# from config.database import get_supabase_client
+# from dotenv import load_dotenv
+# from app.services.activity_logger import ActivityLogger
+
+# load_dotenv()
+
+# # ==========================================================
+# # CONFIGURATION
+# # ==========================================================
+# supabase = get_supabase_client()
+# # passlib (CryptContext) dihapus karena password tidak dienkripsi
+# SECRET_KEY = os.getenv("SECRET_KEY")
+
+# if not SECRET_KEY:
+#     raise ValueError("SECRET_KEY tidak ditemukan di file .env")
+
+# # ==========================================================
+# # HELPER FUNCTIONS
+# # ==========================================================
+# def generate_otp():
+#     return str(random.randint(1000, 9999))
+
+# def get_email_html(fullname, otp_code):
+#     return f"""
+#     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 580px; margin: 40px auto; border-radius: 20px; overflow: hidden; background: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
+        
+#         <div style="background: linear-gradient(135deg, #361F1A 0%, #5D4037 100%); padding: 40px 20px; text-align: center; color: white;">
+#             <div style="font-size: 40px; margin-bottom: 8px;">🏕️</div>
+#             <h1 style="margin: 0; font-size: 28px; letter-spacing: 0.5px;">Scoutify</h1>
+#             <p style="margin: 8px 0 0; font-size: 14px; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px;">Verification Center</p>
+#         </div>
+
+#         <div style="padding: 40px 30px; color: #444;">
+#             <h2 style="margin-top: 0; font-size: 22px; color: #361F1A;">Halo, {fullname}! 👋</h2>
+#             <p style="font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 30px;">
+#                 Seseorang baru saja meminta kode verifikasi untuk akun Scoutify kamu. Jika ini bukan kamu, harap abaikan email ini.
+#             </p>
+
+#             <div style="text-align: center; margin: 30px 0;">
+#                 <p style="font-size: 13px; color: #999; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Kode OTP kamu</p>
+#                 <div style="display: inline-block; padding: 18px 40px; font-size: 38px; font-weight: 800; letter-spacing: 12px; 
+#                             color: #7D562D; background: #F6F3EE; border-radius: 16px; border: 2px solid #EBE5DB;">
+#                     {otp_code}
+#                 </div>
+#             </div>
+
+#             <div style="background: #FFFBF5; border-left: 4px solid #7D562D; padding: 16px; border-radius: 4px; font-size: 14px; color: #5D4037; margin-top: 30px;">
+#                 <strong>Keamanan Akun:</strong> Kode ini hanya berlaku selama <strong>10 menit</strong>. Mohon untuk tidak membagikan kode ini kepada siapapun, termasuk pihak Scoutify.
+#             </div>
+#         </div>
+
+#         <div style="background: #FAFAFA; padding: 20px; text-align: center; font-size: 12px; color: #999;">
+#             <p style="margin: 0;">Pesan ini dikirim otomatis oleh sistem Scoutify.</p>
+#             <p style="margin: 5px 0 0;">&copy; 2026 Scoutify Indonesia. All rights reserved.</p>
+#         </div>
+#     </div>
+#     """
+
+# # ==========================================================
+# # PYDANTIC SCHEMAS
+# # ==========================================================
+# class RegisterRequest(BaseModel):
+#     email: EmailStr
+#     password: str
+#     username: str
+#     fullname: str
+#     provinsi: Optional[str] = None
+#     role: str = "user"
+#     image: str = "default_profile.png"
+
+# class OtpRequest(BaseModel):
+#     email: EmailStr
+#     otp: str
+
+# class ResendOtpRequest(BaseModel):
+#     email: EmailStr
+
+# # ==========================================================
+# # ROUTER INITIALIZER
+# # ==========================================================
+# def init_register_router(mail_conf: ConnectionConfig):
+#     register_router = APIRouter()
+    
+#     # Inisialisasi FastMail
+#     mail = FastMail(mail_conf)
+
+#     # ======================================================
+#     # 1. REGISTER
+#     # ======================================================
+#     @register_router.post("/register", status_code=status.HTTP_201_CREATED)
+#     async def register_user(request_data: RegisterRequest):
+#         try:
+#             email = str(request_data.email).strip().lower()
+#             password = str(request_data.password)
+#             username = request_data.username
+#             fullname = request_data.fullname
+#             province = request_data.provinsi
+#             role = request_data.role
+#             image = request_data.image
+
+#             # Supabase Auth (Supabase akan tetap mengamankan password di table auth.users internalnya)
+#             try:
+#                 auth = supabase.auth.sign_up({"email": email, "password": password})
+#                 if not auth.user:
+#                     raise HTTPException(
+#                         status_code=status.HTTP_400_BAD_REQUEST, 
+#                         detail={"status": "error", "message": "Gagal create auth user"}
+#                     )
+#             except AuthApiError as e:
+#                 if "User already registered" in str(e):
+#                     raise HTTPException(
+#                         status_code=status.HTTP_409_CONFLICT, 
+#                         detail={"status": "error", "message": "Email sudah terdaftar"}
+#                     )
+#                 raise e 
+
+#             # Data Prep
+#             otp_code = generate_otp()
+#             otp_expired_at = (datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)).isoformat()
+            
+#             payload = {
+#                 "user_id": auth.user.id,
+#                 "email": email,
+#                 "exp": datetime.datetime.now(timezone.utc) + datetime.timedelta(days=7)
+#             }
+#             token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+#             # Password dimasukkan tanpa hashing (plaintext)
+#             user_data = {
+#                 "id": auth.user.id,
+#                 "username": username,
+#                 "fullname": fullname,
+#                 "email": email,
+#                 "province": province,
+#                 "password": password,  # Perubahan terjadi di sini
+#                 "otp": int(otp_code),
+#                 "otp_expired_at": otp_expired_at,
+#                 "token": token,
+#                 "role": role,
+#                 "points": 0,
+#                 "image": image,
+#                 "is_verified": False
+#             }
+
+#             supabase.table("users").insert(user_data).execute()
+#             ActivityLogger.log(f"Registrasi berhasil ({email})", auth.user.id)
+
+#             # Send Email menggunakan FastAPI-Mail
+#             try:
+#                 message = MessageSchema(
+#                     subject="Verifikasi Akun Scoutify", 
+#                     recipients=[email],
+#                     body=get_email_html(fullname, otp_code),
+#                     subtype="html"
+#                 )
+#                 await mail.send_message(message)
+#             except Exception as e:
+#                 print(f"[MAIL ERROR] {e}")
+
+#             return {"status": "success", "message": "Registrasi berhasil, cek email", "token": token}
+
+#         except HTTPException:
+#             raise
+#         except Exception as e:
+#             traceback.print_exc()
+#             raise HTTPException(
+#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+#                 detail={"status": "error", "message": "Server error", "error": str(e)}
+#             )
+
+#     # ======================================================
+#     # 2. VERIFY OTP
+#     # ======================================================
+#     @register_router.post("/verify-otp")
+#     async def verify_otp(request_data: OtpRequest):
+#         try:
+#             email = str(request_data.email).strip().lower()
+#             otp_input = str(request_data.otp)
+
+#             res = supabase.table("users").select("*").eq("email", email).execute()
+#             if not res.data:
+#                 raise HTTPException(
+#                     status_code=status.HTTP_404_NOT_FOUND, 
+#                     detail={"status": "error", "message": "User tidak ditemukan"}
+#                 )
+
+#             user = res.data[0]
+
+#             if str(user["otp"]) != otp_input:
+#                 ActivityLogger.log("Verifikasi OTP gagal (kode salah)", user["id"])
+#                 raise HTTPException(
+#                     status_code=status.HTTP_400_BAD_REQUEST, 
+#                     detail={"status": "error", "message": "OTP salah"}
+#                 )
+
+#             expired = datetime.datetime.fromisoformat(user["otp_expired_at"].replace("Z", "+00:00"))
+#             if datetime.datetime.now(timezone.utc) > expired:
+#                 raise HTTPException(
+#                     status_code=status.HTTP_400_BAD_REQUEST, 
+#                     detail={"status": "error", "message": "OTP expired"}
+#                 )
+
+#             supabase.table("users").update({
+#                 "is_verified": True,
+#                 "otp": None,
+#                 "otp_expired_at": None
+#             }).eq("id", user["id"]).execute()
+
+#             safe_user_data = {
+#                 "id": str(user["id"]),
+#                 "username": user.get("username", ""),
+#                 "fullname": user.get("fullname", ""),
+#                 "email": user.get("email", ""),
+#                 "role": user.get("role", "user"),
+#                 "province": user.get("province", ""),
+#                 "points": user.get("points", 0),
+#                 "image": user.get("image", "default_profile.png")
+#             }
+
+#             return {
+#                 "status": "success", 
+#                 "message": "Akun berhasil diverifikasi",
+#                 "token": user["token"],
+#                 "user": safe_user_data
+#             }
+
+#         except HTTPException:
+#             raise
+#         except Exception as e:
+#             traceback.print_exc()
+#             raise HTTPException(
+#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+#                 detail={"status": "error", "message": "Server error"}
+#             )
+
+#     # ======================================================
+#     # 3. RESEND OTP
+#     # ======================================================
+#     @register_router.post("/resend-otp")
+#     async def resend_otp(request_data: ResendOtpRequest):
+#         try:
+#             email = str(request_data.email).strip().lower()
+            
+#             res = supabase.table("users").select("id, fullname").eq("email", email).execute()
+#             if not res.data:
+#                 raise HTTPException(
+#                     status_code=status.HTTP_404_NOT_FOUND, 
+#                     detail={"status": "error", "message": "User tidak ditemukan"}
+#                 )
+            
+#             user = res.data[0]
+#             new_otp = generate_otp()
+#             new_expired = (datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=10)).isoformat()
+
+#             supabase.table("users").update({
+#                 "otp": int(new_otp),
+#                 "otp_expired_at": new_expired
+#             }).eq("id", user["id"]).execute()
+
+#             # Kirim Ulang Email
+#             message = MessageSchema(
+#                 subject="OTP Baru Scoutify", 
+#                 recipients=[email],
+#                 body=get_email_html(user["fullname"], new_otp),
+#                 subtype="html"
+#             )
+#             await mail.send_message(message)
+
+#             return {"status": "success", "message": "OTP baru terkirim"}
+            
+#         except HTTPException:
+#             raise
+#         except Exception as e:
+#             traceback.print_exc()
+#             raise HTTPException(
+#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+#                 detail={"status": "error", "message": "Gagal resend OTP"}
+#             )
+
+#     return register_router

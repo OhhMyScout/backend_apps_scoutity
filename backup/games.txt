@@ -1,0 +1,165 @@
+import os
+import jwt
+from flask import Blueprint, request, jsonify
+from config.database import get_supabase_client
+from app.services.activity_logger import ActivityLogger
+from dotenv import load_dotenv
+
+load_dotenv()
+
+supabase = get_supabase_client()
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+def init_games_blueprint():
+    games_blueprint = Blueprint("games", __name__)
+
+    # Helper function untuk verifikasi JWT Token
+    def get_user_from_token():
+        auth_header = request.headers.get("Authorization")
+        if not auth_header or not auth_header.startswith("Bearer "):
+            return None
+        token = auth_header.split(" ")[1].strip()
+        try:
+            decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            return decoded.get("user_id")
+        except Exception:
+            return None
+
+    # =====================================================
+    # 1. SAVE SCORE
+    # =====================================================
+    @games_blueprint.route("/score", methods=["POST"])
+    def save_score():
+        user_id = get_user_from_token()
+        if not user_id:
+            return jsonify({"status": "error", "message": "Unauthorized"}), 401
+
+        data = request.json or {}
+        game_name = data.get("game_name")
+        score = data.get("score", 0)
+
+        if not game_name:
+            return jsonify({"status": "error", "message": "Nama game wajib diisi"}), 400
+
+        try:
+            # A. Simpan history skor ke tabel game_scores
+            supabase.table("game_scores").insert({
+                "user_id": user_id,
+                "game_name": game_name,
+                "score": score
+            }).execute()
+
+            # B. Update total points (Global Leaderboard) di tabel users
+            if score > 0:
+                # Ambil poin saat ini
+                user_res = supabase.table("users").select("points, username").eq("id", user_id).execute()
+                if user_res.data:
+                    current_points = user_res.data[0].get("points", 0)
+                    new_points = current_points + score
+                    
+                    # Update poin baru
+                    supabase.table("users").update({"points": new_points}).eq("id", user_id).execute()
+
+                    username = user_res.data[0].get("username", "User")
+                    ActivityLogger.log(f"Skor {score} ditambahkan ke {username} dari {game_name}")
+
+            return jsonify({
+                "status": "success",
+                "message": "Skor berhasil disimpan"
+            }), 200
+
+        except Exception as e:
+            print(f"[SAVE SCORE ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Gagal menyimpan skor"}), 500
+
+    # =====================================================
+    # 2. GLOBAL LEADERBOARD
+    # =====================================================
+    @games_blueprint.route("/leaderboard", methods=["GET"])
+    def global_leaderboard():
+        try:
+            result = (
+                supabase.table("users")
+                .select("id,username,fullname,email,province,points,image,is_verified")
+                .eq("is_verified", True)
+                .order("points", desc=True)
+                .execute()
+            )
+
+            users = result.data or []
+            leaderboard_data = []
+
+            for index, user in enumerate(users):
+                leaderboard_data.append({
+                    "rank": index + 1,
+                    "id": user.get("id"),
+                    "username": user.get("username"),
+                    "fullname": user.get("fullname"),
+                    "email": user.get("email"),
+                    "province": user.get("province"),
+                    "points": user.get("points", 0),
+                    "image": user.get("image")
+                })
+
+            return jsonify({
+                "status": "success",
+                "message": "Global Leaderboard berhasil diambil",
+                "data": leaderboard_data
+            }), 200
+
+        except Exception as e:
+            print(f"[LEADERBOARD ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Gagal mengambil leaderboard"}), 500
+
+    # =====================================================
+    # 3. SPECIFIC GAME LEADERBOARD
+    # =====================================================
+    @games_blueprint.route("/leaderboard/<game_name>", methods=["GET"])
+    def game_leaderboard(game_name):
+        try:
+            # Query ke tabel game_scores lalu join ke tabel users
+            # Menggunakan max(score) tidak langsung didukung API standard Supabase Python, 
+            # jadi kita ambil semua skor, urutkan, dan filter unik per user.
+            result = (
+                supabase.table("game_scores")
+                .select("score, users(id, username, fullname, province, image)")
+                .eq("game_name", game_name)
+                .order("score", desc=True)
+                .execute()
+            )
+
+            scores = result.data or []
+            
+            # Ambil skor tertinggi unik per user
+            seen_users = set()
+            leaderboard_data = []
+            
+            for item in scores:
+                user_info = item.get("users")
+                if not user_info:
+                    continue
+                    
+                user_id = user_info.get("id")
+                if user_id not in seen_users:
+                    seen_users.add(user_id)
+                    leaderboard_data.append({
+                        "rank": len(leaderboard_data) + 1,
+                        "id": user_id,
+                        "username": user_info.get("username"),
+                        "fullname": user_info.get("fullname"),
+                        "province": user_info.get("province"),
+                        "points": item.get("score", 0),
+                        "image": user_info.get("image")
+                    })
+
+            return jsonify({
+                "status": "success",
+                "message": f"Leaderboard {game_name} berhasil diambil",
+                "data": leaderboard_data
+            }), 200
+
+        except Exception as e:
+            print(f"[GAME LEADERBOARD ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Gagal mengambil leaderboard game"}), 500
+
+    return games_blueprint

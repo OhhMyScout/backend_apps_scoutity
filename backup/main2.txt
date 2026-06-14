@@ -1,0 +1,228 @@
+import os
+import socket
+import uvicorn
+
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# ==========================================================
+# FASTAPI MAIL CONFIG
+# ==========================================================
+from fastapi_mail import ConnectionConfig
+
+# ==========================================================
+# MODULE IMPORT
+# ==========================================================
+from app.module.login.login import init_login_router
+from app.module.register.register import init_register_router
+from app.module.logout.logout import init_logout_router
+from app.module.profile.profile import init_profile_router
+from app.module.games.games import init_games_router
+from app.module.games.leaderboard import init_leaderboard_router
+from app.module.forgot.forgot_password import init_forgot_router
+from app.module.berita.berita import init_berita_router
+
+
+load_dotenv()
+
+# ==========================================================
+# GET LOCAL IP
+# ==========================================================
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "127.0.0.1"
+
+
+LOCAL_IP = get_local_ip()
+
+# ==========================================================
+# APP INITIALIZATION
+# ==========================================================
+app = FastAPI(
+    title="Scoutify API",
+    description="Backend API untuk Scoutify",
+    version="1.0.0"
+)
+
+allow_origins = [
+    "https://trycenter.my.id",
+    "https://www.trycenter.my.id",
+    "https://api.trycenter.my.id",
+    "https://dev.trycenter.my.id"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allow_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ==========================================================
+# REQUEST LOGGER
+# ==========================================================
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+
+    ip = (
+        request.headers.get("cf-connecting-ip")
+        or request.headers.get("x-forwarded-for")
+        or request.client.host
+    )
+
+    if "," in str(ip):
+        ip = ip.split(",")[0].strip()
+
+    print(
+        f"[REQUEST] {request.method} "
+        f"{request.url.path} "
+        f"| IP: {ip}"
+    )
+
+    response = await call_next(request)
+    return response
+
+# ==========================================================
+# MAIL CONFIG
+# ==========================================================
+mail_conf = ConnectionConfig(
+    MAIL_USERNAME=os.getenv("MAIL_USERNAME", ""),
+    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD", ""),
+    MAIL_FROM=os.getenv("MAIL_DEFAULT_SENDER"),
+    MAIL_PORT=int(os.getenv("MAIL_PORT", 587)),
+    MAIL_SERVER=os.getenv("MAIL_SERVER", "smtp.gmail.com"),
+    MAIL_STARTTLS=True,
+    MAIL_SSL_TLS=False,
+    USE_CREDENTIALS=True,
+    VALIDATE_CERTS=True
+)
+
+# ==========================================================
+# ROUTERS
+# ==========================================================
+app.include_router(
+    init_login_router(),
+    prefix="/api"
+)
+
+app.include_router(
+    init_register_router(mail_conf),
+    prefix="/api"
+)
+
+app.include_router(
+    init_logout_router(),
+    prefix="/api"
+)
+
+app.include_router(
+    init_profile_router(mail_conf),
+    prefix="/api"
+)
+
+app.include_router(
+    init_games_router(),
+    prefix="/api"
+)
+
+app.include_router(
+    init_leaderboard_router(),
+    prefix="/api"
+)
+
+app.include_router(
+    init_forgot_router(mail_conf),
+    prefix="/api"
+)
+
+app.include_router(
+    init_berita_router(),
+    prefix="/api"
+)
+
+
+# ==========================================================
+# HEALTH CHECK
+# ==========================================================
+@app.get("/", tags=["Health"])
+async def index():
+    return {
+        "status": "success",
+        "message": "Backend Scoutify Running"
+    }
+
+# ==========================================================
+# API STATUS
+# ==========================================================
+@app.get("/api/status", tags=["Health"])
+async def api_status():
+    return {
+        "status": "success",
+        "service": "Scoutify API",
+        "version": "1.0.0"
+    }
+
+# ==========================================================
+# SHOW CLIENT IP
+# ==========================================================
+@app.get("/api/my-ip")
+async def my_ip(request: Request):
+
+    ip = (
+        request.headers.get("cf-connecting-ip")
+        or request.headers.get("x-forwarded-for")
+        or request.client.host
+    )
+
+    if "," in str(ip):
+        ip = ip.split(",")[0].strip()
+
+    return {
+        "ip": ip
+    }
+
+# ==========================================================
+# START SERVER
+# ==========================================================
+if __name__ == "__main__":
+
+    print("=" * 60)
+    print("SCOUTIFY BACKEND RUNNING")
+    print(f"LOCAL IP : {LOCAL_IP}")
+    print("HOST     : 0.0.0.0")
+    print("PORT     : 5000")
+    print(f"DOCS     : http://{LOCAL_IP}:5000/docs")
+    print(f"STATUS   : http://{LOCAL_IP}:5000/api/status")
+    print("=" * 60)
+
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=5000,
+        reload=False
+    )
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+

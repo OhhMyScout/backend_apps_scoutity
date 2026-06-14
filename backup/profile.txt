@@ -1,0 +1,295 @@
+import os
+import jwt
+import random
+import datetime
+from datetime import timezone
+
+from flask import Blueprint, request, jsonify
+from flask_mail import Message
+from dotenv import load_dotenv
+
+from config.database import get_supabase_client
+
+load_dotenv()
+
+# ==========================================================
+# SETUP & CONFIGURATION
+# ==========================================================
+supabase = get_supabase_client()
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+
+# ==========================================================
+# ACTIVITY LOG HELPER
+# ==========================================================
+def save_activity_log(user_id=None, activity="", ip_address=None, user_agent=None):
+    try:
+        supabase.table("activity_logs").insert({
+            "user_id": user_id,
+            "activity": activity,
+            "ip_address": ip_address,
+            "user_agent": user_agent
+        }).execute()
+    except Exception as e:
+        print(f"[ACTIVITY LOG ERROR] {str(e)}")
+
+
+# ==========================================================
+# OTP GENERATOR
+# ==========================================================
+def generate_otp():
+    return str(random.randint(1000, 9999))
+
+
+# ==========================================================
+# BLUEPRINT INITIALIZER
+# ==========================================================
+def init_profile_blueprint(mail):
+    profile_bp = Blueprint("profile", __name__)
+
+    # =====================================================
+    # GET PROFILE
+    # =====================================================
+    @profile_bp.route("/profile", methods=["GET"])
+    def get_profile():
+        try:
+            auth_header = request.headers.get("Authorization")
+
+            if not auth_header or not auth_header.startswith("Bearer "):
+                return jsonify({"status": "error", "message": "Token tidak ditemukan atau tidak valid"}), 401
+
+            token = auth_header.split(" ")[1].strip()
+            
+            try:
+                decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            except jwt.ExpiredSignatureError:
+                return jsonify({"status": "error", "message": "Token sudah kedaluwarsa, silakan login kembali"}), 401
+            except jwt.InvalidTokenError:
+                return jsonify({"status": "error", "message": "Token tidak valid"}), 401
+
+            user_id = decoded.get("user_id")
+            user = supabase.table("users").select("*").eq("id", user_id).execute()
+
+            if not user.data:
+                return jsonify({"status": "error", "message": "User tidak ditemukan"}), 404
+
+            # Hilangkan data sensitif sebelum dikirim ke frontend
+            user_data = user.data[0]
+            user_data.pop("password", None)
+
+            return jsonify({
+                "status": "success",
+                "user": user_data
+            }), 200
+
+        except Exception as e:
+            print(f"[GET PROFILE ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Terjadi kesalahan server"}), 500
+
+
+    # =====================================================
+    # UPDATE PROFILE
+    # =====================================================
+    @profile_bp.route("/profile/update", methods=["PUT"])
+    def update_profile():
+        try:
+            auth_header = request.headers.get("Authorization")
+
+            if not auth_header or not auth_header.startswith("Bearer "):
+                return jsonify({"status": "error", "message": "Token kosong atau tidak valid"}), 401
+
+            token = auth_header.split(" ")[1].strip()
+            
+            try:
+                decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            except jwt.ExpiredSignatureError:
+                return jsonify({"status": "error", "message": "Token sudah kedaluwarsa"}), 401
+            except jwt.InvalidTokenError:
+                return jsonify({"status": "error", "message": "Token tidak valid"}), 401
+
+            user_id = decoded.get("user_id")
+            data = request.json or {}
+
+            update_data = {
+                "fullname": data.get("fullname"),
+                "username": data.get("username"),
+                "gudep": data.get("gudep"),
+                "province": data.get("province"),
+            }
+
+            # Filter out None values to prevent overwriting existing data with nulls
+            update_data = {k: v for k, v in update_data.items() if v is not None}
+
+            # Email hanya boleh diupdate melalui flow ini jika OTP sudah diverifikasi di frontend
+            if data.get("email"):
+                update_data["email"] = data.get("email")
+
+            if not update_data:
+                return jsonify({"status": "error", "message": "Tidak ada data yang diperbarui"}), 400
+
+            result = supabase.table("users") \
+                .update(update_data) \
+                .eq("id", user_id) \
+                .execute()
+
+            # Logging pembaruan profil
+            save_activity_log(
+                user_id=user_id,
+                activity="Pengguna memperbarui data profil",
+                ip_address=request.remote_addr,
+                user_agent=request.headers.get("User-Agent")
+            )
+
+            return jsonify({
+                "status": "success",
+                "message": "Profile berhasil diupdate",
+                "user": result.data[0] if result.data else None
+            }), 200
+
+        except Exception as e:
+            print(f"[UPDATE PROFILE ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Terjadi kesalahan server saat memperbarui profil"}), 500
+
+
+    # =====================================================
+    # SEND OTP (DB + EMAIL)
+    # =====================================================
+    @profile_bp.route("/otp/send", methods=["POST"])
+    def send_otp():
+        try:
+            data = request.json or {}
+            email = (data.get("email") or "").strip().lower()
+
+            if not email:
+                return jsonify({"status": "error", "message": "Email wajib diisi"}), 400
+
+            # Verifikasi apakah email benar-benar ada di database sebelum kirim OTP
+            user_check = supabase.table("users").select("id").eq("email", email).execute()
+            if not user_check.data:
+                return jsonify({"status": "error", "message": "Email tidak terdaftar"}), 404
+
+            user_id = user_check.data[0]["id"]
+            otp_code = generate_otp()
+            otp_expired_at = (
+                datetime.datetime.now(timezone.utc)
+                + datetime.timedelta(minutes=10)
+            ).isoformat()
+
+            # Save OTP to Database
+            supabase.table("users") \
+                .update({
+                    "otp": otp_code,
+                    "otp_expired_at": otp_expired_at
+                }) \
+                .eq("email", email) \
+                .execute()
+
+            # Send Email
+            try:
+                msg = Message(
+                    subject="OTP Verifikasi Perubahan Profil Scoutify",
+                    recipients=[email]
+                )
+
+                msg.body = f"""
+Seseorang sedang meminta perubahan pengaturan pada akun profil kamu.
+Kode OTP kamu: {otp_code}
+
+Berlaku selama 10 menit.
+Jangan bagikan kode ini ke siapa pun.
+"""
+                mail.send(msg)
+                
+                save_activity_log(
+                    user_id=user_id,
+                    activity=f"OTP pembaruan profil berhasil dikirim ke {email}",
+                    ip_address=request.remote_addr,
+                    user_agent=request.headers.get("User-Agent")
+                )
+
+            except Exception as mail_error:
+                print(f"[MAIL ERROR] {str(mail_error)}")
+                return jsonify({"status": "error", "message": "Gagal mengirimkan email OTP"}), 500
+
+            return jsonify({
+                "status": "success",
+                "message": "OTP berhasil dikirim ke email"
+            }), 200
+
+        except Exception as e:
+            print(f"[SEND OTP ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Terjadi kesalahan server"}), 500
+
+
+    # =====================================================
+    # VERIFY OTP
+    # =====================================================
+    @profile_bp.route("/otp/verify", methods=["POST"])
+    def verify_otp():
+        try:
+            data = request.json or {}
+
+            email = (data.get("email") or "").strip().lower()
+            otp_input = str(data.get("otp"))
+
+            if not email or not otp_input:
+                return jsonify({"status": "error", "message": "Email dan OTP wajib diisi"}), 400
+
+            res = supabase.table("users") \
+                .select("id", "otp", "otp_expired_at") \
+                .eq("email", email) \
+                .execute()
+
+            if not res.data:
+                return jsonify({"status": "error", "message": "User tidak ditemukan"}), 404
+
+            user = res.data[0]
+            user_id = user["id"]
+
+            # Check OTP match
+            if str(user.get("otp")) != otp_input:
+                save_activity_log(
+                    user_id=user_id,
+                    activity="Percobaan verifikasi OTP profil gagal (Kode salah)",
+                    ip_address=request.remote_addr,
+                    user_agent=request.headers.get("User-Agent")
+                )
+                return jsonify({"status": "error", "message": "OTP salah"}), 400
+
+            # Check expiration
+            expired_at = datetime.datetime.fromisoformat(
+                user["otp_expired_at"].replace("Z", "+00:00")
+            )
+
+            if datetime.datetime.now(timezone.utc) > expired_at:
+                save_activity_log(
+                    user_id=user_id,
+                    activity="Percobaan verifikasi OTP profil gagal (Expired)",
+                    ip_address=request.remote_addr,
+                    user_agent=request.headers.get("User-Agent")
+                )
+                return jsonify({"status": "error", "message": "OTP sudah kedaluwarsa"}), 400
+
+            # Clear OTP upon successful verification
+            supabase.table("users").update({
+                "otp": None,
+                "otp_expired_at": None
+            }).eq("email", email).execute()
+
+            save_activity_log(
+                user_id=user_id,
+                activity="Verifikasi OTP profil berhasil",
+                ip_address=request.remote_addr,
+                user_agent=request.headers.get("User-Agent")
+            )
+
+            return jsonify({
+                "status": "success",
+                "message": "OTP valid"
+            }), 200
+
+        except Exception as e:
+            print(f"[VERIFY OTP ERROR] {str(e)}")
+            return jsonify({"status": "error", "message": "Terjadi kesalahan server saat verifikasi"}), 500
+
+    return profile_bp

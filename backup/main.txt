@@ -1,0 +1,135 @@
+import os
+from flask import Flask
+from flask_cors import CORS
+from flask_mail import Mail
+from dotenv import load_dotenv
+
+# ==========================================================
+# MODULE IMPORT
+# ==========================================================
+from app.module.login.login import init_login_blueprint
+from app.module.register.register import init_register_blueprint
+from app.module.logout.logout import init_logout_blueprint
+from app.module.profile.profile import init_profile_blueprint
+from app.module.games.games import init_games_blueprint
+
+# TAMBAHAN DI SINI: Import blueprint leaderboard
+from app.module.games.leaderboard import init_leaderboard_blueprint
+
+load_dotenv()
+
+app = Flask(__name__)
+
+# ==========================================================
+# CORS
+# ==========================================================
+CORS(
+    app,
+    resources={
+        r"/api/*": {
+            "origins": "*"
+        }
+    }
+)
+
+# ==========================================================
+# MAIL CONFIG
+# ==========================================================
+app.config["MAIL_SERVER"] = os.getenv(
+    "MAIL_SERVER",
+    "smtp.gmail.com"
+)
+
+app.config["MAIL_PORT"] = int(
+    os.getenv("MAIL_PORT", 587)
+)
+
+app.config["MAIL_USE_TLS"] = (
+    os.getenv("MAIL_USE_TLS", "True") == "True"
+)
+
+app.config["MAIL_USERNAME"] = os.getenv(
+    "MAIL_USERNAME"
+)
+
+app.config["MAIL_PASSWORD"] = (
+    os.getenv("MAIL_PASSWORD") or ""
+).replace(" ", "")
+
+app.config["MAIL_DEFAULT_SENDER"] = (
+    "Scoutify",
+    os.getenv("MAIL_DEFAULT_SENDER")
+)
+
+mail = Mail(app)
+
+# ==========================================================
+# BLUEPRINT REGISTRATION
+# ==========================================================
+app.register_blueprint(
+    init_login_blueprint(),
+    url_prefix="/api"
+)
+
+app.register_blueprint(
+    init_register_blueprint(mail),
+    url_prefix="/api"
+)
+
+app.register_blueprint(
+    init_logout_blueprint(),
+    url_prefix="/api"
+)
+
+app.register_blueprint(
+    init_profile_blueprint(mail),
+    url_prefix="/api"
+)
+
+app.register_blueprint(
+    init_games_blueprint(),
+    url_prefix="/api"
+)
+
+# TAMBAHAN DI SINI: Registrasi blueprint
+app.register_blueprint(
+    init_leaderboard_blueprint(),
+    url_prefix="/api"
+)
+
+# ==========================================================
+# HEALTH CHECK
+# ==========================================================
+@app.route("/", methods=["GET"])
+def index():
+    return {
+        "status": "success",
+        "message": "Backend Scoutify Running"
+    }
+
+# ==========================================================
+# API STATUS
+# ==========================================================
+@app.route("/api/status", methods=["GET"])
+def api_status():
+    return {
+        "status": "success",
+        "service": "Scoutify API",
+        "version": "1.0.0"
+    }
+
+# ==========================================================
+# START SERVER
+# ==========================================================
+if __name__ == "__main__":
+    print("=" * 50)
+    print("SCOUTIFY BACKEND RUNNING")
+    print("HOST : 0.0.0.0")
+    print("PORT : 5000")
+    print("=" * 50)
+
+    app.run(
+        debug=True,
+        host="0.0.0.0",
+        port=5000
+    )
