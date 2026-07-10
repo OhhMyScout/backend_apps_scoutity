@@ -32,6 +32,7 @@ from app.module.forgot.forgot_password import init_forgot_router
 from app.module.berita.berita import init_berita_router
 from app.module.detection.detection import init_detection_router
 from app.services.activity_logger import init_logs_router
+from app.module.uji_sku.uji_sku import init_uji_sku_router
 
 
 # ==========================================================
@@ -236,21 +237,31 @@ mail_conf = ConnectionConfig(
 # ==========================================================
 # ROUTERS INJECTION
 # ==========================================================
+
+# -- 1. Auth & Security --
 app.include_router(init_login_router(), prefix="/api", tags=["Auth & Security"])
 app.include_router(init_register_router(mail_conf), prefix="/api", tags=["Auth & Security"])
 app.include_router(init_logout_router(), prefix="/api", tags=["Auth & Security"])
 app.include_router(init_forgot_router(mail_conf), prefix="/api", tags=["Auth & Security"])
 
+# -- 2. Profile Management --
 app.include_router(init_profile_router(mail_conf), prefix="/api", tags=["Profile Management"])
 
+# -- 3. Kepramukaan & Fitur Utama --
+app.include_router(init_uji_sku_router(), prefix="/api", tags=["Uji SKU"])
+app.include_router(init_detection_router(), prefix="/api", tags=["Detection Services"])
 app.include_router(init_games_router(), prefix="/api", tags=["Games"])
 app.include_router(init_leaderboard_router(), prefix="/api", tags=["Games"])
 
-app.include_router(init_berita_router(), prefix="/api", tags=["News / Berita"])
-app.include_router(init_detection_router(), prefix="/api", tags=["Detection Services"])
+# -- 4. Informasi & Berita --
+# (Tag dihapus agar mengikuti setting bawaan file berita.py dan tidak duplikat)
+app.include_router(init_berita_router(), prefix="/api")
 
-app.include_router(init_logs_router(), prefix="/api", tags=["Logs"])
+# -- 5. System Logs --
+# (Pemanggilan init_logs_router yang ganda sudah dihapus)
 app.include_router(init_logs_router(), prefix="/api", tags=["User Activity Logs"])
+
+
 # ==========================================================
 # ROOT & HEALTH CHECKS
 # ==========================================================

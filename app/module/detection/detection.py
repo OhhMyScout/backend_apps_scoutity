@@ -15,7 +15,7 @@ def init_detection_router():
 
     router = APIRouter()
 
-    @router.post("/detection/semaphore")
+    @router.post("/deteksi/semaphore")
     async def detect_semaphore(
         file: UploadFile = File(...)
     ):
